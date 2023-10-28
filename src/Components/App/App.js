@@ -9,51 +9,10 @@ import Spotify from '../../util/Spotify';
 class App extends React.Component {
   constructor(props){
     super(props);
-    this.state = {searchResults: [
-      {
-        name: "Estilo Bajo",
-        artist: "Estilo Bajo",
-        album: "Son del Hipogeo",
-        id: 1,
-      },
-      {
-        name: "Ettnnia",
-        artist: "La Ettnnia",
-        album: "Ataque",
-        id: 2,
-      },
-      {
-        name: "Asilo 38",
-        artist: "Asilo 38",
-        album: "La hoguera",
-        id: 3,
-      },
-      {
-        name: "Tres Coronas",
-        artist: "Tres Coronas",
-        album: "Brooklyn",
-        id: 4,
-      },   
-      ],
-      playlistName :'Nanos Playlist',
-      playlistTracks: [{
-        name: "Tres Coronas",
-        artist: "Tres Coronas ft Zebra",
-        album: "Soacha",
-        id: 5
-      }, 
-      {
-        name: "Ettnnia",
-        artist: "La Ettnnia",
-        album: "Ataque Metano",
-        id: 6,
-      },
-      {
-        name: "Artefacto",
-        artist: "Artefacto",
-        album: "Asi es que!",
-        id: 7,
-      }]
+    this.state = {
+      searchResults: [ ],
+      playlistName :'My Playlist',
+      playlistTracks: []
       };
      this.addTrack = this.addTrack.bind(this);
      this.removeTrack = this.removeTrack.bind(this);
@@ -86,7 +45,13 @@ class App extends React.Component {
 
     savePlaylist() {
       alert("working")
-      const trackUris = this.state.playlistTracks.map(track => track.uri);           
+      const trackUris = this.state.playlistTracks.map(track => track.uri);   
+      Spotify.savePlaylist(this.state.playlistName, trackUris).then(() => {
+        this.setState({
+          playlistName: 'New Playlist',
+          playlistTracks: []
+        })
+      })        
     }
 
     search(term) {
@@ -98,7 +63,7 @@ class App extends React.Component {
     render() {
       return (
         <div >
-          <h1>Ja<span className = "highlight">mmm</span>ing</h1>
+          <h1>Ja<span className = "highlight">mmm</span>in</h1>
           <div className="App">
             <SearchBar onSearch={this.search}/> 
             <div className="App-playlist">
